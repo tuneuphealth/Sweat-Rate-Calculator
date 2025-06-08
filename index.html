@@ -1,0 +1,257 @@
+Sweat Rate Calculator Test v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweat Rate Calculator</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    .star {
+      color: red;
+    }
+    .rs-vl {
+      font-weight: bold;
+      color: #007bff;
+    }
+    #pdf_section {
+      display: none;
+      background: white;
+      padding: 20px;
+      max-width: 700px;
+      border: 1px solid #ddd;
+      margin-top: 30px;
+    }
+    .pdf_top_title {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .left_left_td {
+      font-weight: 600;
+      width: 40%;
+    }
+    .left_right_td {
+      width: 60%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-4">
+    <h3>Sweat Rate Calculator</h3>
+    <form id="sweatRateForm" novalidate>
+      <div class="form-group row">
+        <label for="in_1" class="col-md-7 col-form-label">Date:</label>
+        <div class="col-md-5">
+          <input type="date" class="form-control" id="in_1" required />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_2" class="col-md-7 col-form-label">Temperature (°C/°F):</label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_2" placeholder="e.g. 22" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_3" class="col-md-7 col-form-label">Humidity (%):</label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_3" placeholder="e.g. 60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_4" class="col-md-7 col-form-label">
+          Session Duration (min) <span class="star">*</span>:
+        </label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_4" placeholder="e.g. 60" required />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_5" class="col-md-7 col-form-label">
+          Pre-exercise Weight (kg) <span class="star">*</span>:
+        </label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_5" placeholder="e.g. 70.5" required />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_6" class="col-md-7 col-form-label">
+          Post-exercise Weight (kg) <span class="star">*</span>:
+        </label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_6" placeholder="e.g. 69.8" required />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_7" class="col-md-7 col-form-label">
+          Fluid Intake (ml) <span class="star">*</span>:
+        </label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_7" placeholder="e.g. 750" required />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="in_8" class="col-md-7 col-form-label">Urine Volume (ml):</label>
+        <div class="col-md-5">
+          <input type="number" step="any" class="form-control" id="in_8" placeholder="e.g. 50" />
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="calculator_btn">Calculate</button>
+    </form>
+
+    <div class="mt-4 p-3 border rounded">
+      <p>Your Sweat Rate was <span class="rs-vl" id="out_4">0.00</span> ml per hour.</p>
+      <p>You managed to replace <span class="rs-vl" id="out_5">0%</span> of your sweat losses during the session.</p>
+      <p>The mismatch between your fluid intake and total fluid losses resulted in a <span class="rs-vl" id="out_6">0%</span> change in body weight.</p>
+      <button class="btn btn-success mt-3" id="btn_download" disabled>Download PDF</button>
+    </div>
+
+    <!-- Hidden PDF section -->
+    <div id="pdf_section">
+      <h3 class="pdf_top_title">Sweat Rate Results</h3>
+      <table class="table table-bordered">
+        <tbody>
+          <tr><td class="left_left_td">Date:</td><td id="in_1_pdf">-</td></tr>
+          <tr><td class="left_left_td">Temperature (°C/°F):</td><td id="in_2_pdf">-</td></tr>
+          <tr><td class="left_left_td">Humidity (%):</td><td id="in_3_pdf">-</td></tr>
+          <tr><td class="left_left_td">Session Duration:</td><td id="in_4_pdf">-</td></tr>
+          <tr><td class="left_left_td">Pre-exercise Weight:</td><td id="in_5_pdf">-</td></tr>
+          <tr><td class="left_left_td">Post-exercise Weight:</td><td id="in_6_pdf">-</td></tr>
+          <tr><td class="left_left_td">Fluid Intake (ml):</td><td id="in_7_pdf">-</td></tr>
+          <tr><td class="left_left_td">Urine Volume (ml):</td><td id="in_8_pdf">-</td></tr>
+        </tbody>
+      </table>
+      <p>Your sweat rate in these conditions was <span id="out_4_pdf">0.00</span> ml per hour.</p>
+      <p>You managed to replace <span id="out_7_pdf">0%</span> of your sweat losses during the session.</p>
+      <p>The mismatch between your fluid intake and total fluid losses resulted in a <span id="out_8_pdf">0%</span> change in body weight.</p>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+  <script>
+    const calculateSweatRate = () => {
+      try {
+        const date = document.getElementById('in_1').value;
+        const tempRaw = document.getElementById('in_2').value;
+        const humidityRaw = document.getElementById('in_3').value;
+        const durationRaw = document.getElementById('in_4').value;
+        const preWeightRaw = document.getElementById('in_5').value;
+        const postWeightRaw = document.getElementById('in_6').value;
+        const fluidIntakeRaw = document.getElementById('in_7').value;
+        const urineVolRaw = document.getElementById('in_8').value;
+
+        if (!date) {
+          alert('Please select a date.');
+          return false;
+        }
+        const duration = parseFloat(durationRaw);
+        const preWeight = parseFloat(preWeightRaw);
+        const postWeight = parseFloat(postWeightRaw);
+        const fluidIntake = parseFloat(fluidIntakeRaw);
+        const urineVol = urineVolRaw ? parseFloat(urineVolRaw) : 0;
+        const temp = tempRaw ? parseFloat(tempRaw) : '-';
+        const humidity = humidityRaw ? parseFloat(humidityRaw) : '-';
+
+        if (isNaN(duration) || duration <= 0) {
+          alert('Please enter a valid session duration.');
+          return false;
+        }
+        if (isNaN(preWeight) || preWeight <= 0) {
+          alert('Please enter a valid pre-exercise weight.');
+          return false;
+        }
+        if (isNaN(postWeight) || postWeight <= 0) {
+          alert('Please enter a valid post-exercise weight.');
+          return false;
+        }
+        if (isNaN(fluidIntake) || fluidIntake < 0) {
+          alert('Please enter a valid fluid intake.');
+          return false;
+        }
+        if (urineVol < 0) {
+          alert('Please enter a valid urine volume.');
+          return false;
+        }
+
+        // Calculate total fluid loss (ml)
+        const bodyWeightChangeMl = (preWeight - postWeight) * 1000;
+        const totalFluidLoss = bodyWeightChangeMl + fluidIntake - urineVol;
+
+        const sweatRate = (totalFluidLoss / duration) * 60;
+        const fluidReplacementPct = totalFluidLoss > 0 ? (fluidIntake / totalFluidLoss) * 100 : 0;
+        const bodyWeightChangePct = ((postWeight - preWeight) / preWeight) * 100;
+
+        // Update page results
+        document.getElementById('out_4').innerText = sweatRate.toFixed(2);
+        document.getElementById('out_5').innerText = fluidReplacementPct.toFixed(1) + '%';
+        document.getElementById('out_6').innerText = bodyWeightChangePct.toFixed(2) + '%';
+
+        // Enable PDF button
+        document.getElementById('btn_download').disabled = false;
+
+        // Update PDF content
+        document.getElementById('in_1_pdf').innerText = date;
+        document.getElementById('in_2_pdf').innerText = temp === '-' ? '-' : temp.toFixed(1);
+        document.getElementById('in_3_pdf').innerText = humidity === '-' ? '-' : humidity.toFixed(1);
+        document.getElementById('in_4_pdf').innerText = duration + ' min';
+        document.getElementById('in_5_pdf').innerText = preWeight.toFixed(2) + ' kg';
+        document.getElementById('in_6_pdf').innerText = postWeight.toFixed(2) + ' kg';
+        document.getElementById('in_7_pdf').innerText = fluidIntake.toFixed(0) + ' ml';
+        document.getElementById('in_8_pdf').innerText = urineVol > 0 ? urineVol.toFixed(0) + ' ml' : '-';
+        document.getElementById('out_4_pdf').innerText = sweatRate.toFixed(2) + ' ml per hour';
+        document.getElementById('out_7_pdf').innerText = fluidReplacementPct.toFixed(1) + '%';
+        document.getElementById('out_8_pdf').innerText = bodyWeightChangePct.toFixed(2) + '%';
+
+        return true;
+      } catch (e) {
+        console.error('Calculation error:', e);
+        alert('An error occurred during calculation. Please check your inputs.');
+        return false;
+      }
+    };
+
+    document.getElementById('calculator_btn').addEventListener('click', calculateSweatRate);
+
+    document.getElementById('btn_download').addEventListener('click', () => {
+      // Show the PDF section temporarily
+      const pdfSection = document.getElementById('pdf_section');
+      pdfSection.style.display = 'block';
+
+      const opt = {
+        margin: 0.5,
+        filename: 'Sweat_Rate_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      };
+
+      html2pdf()
+        .set(opt)
+        .from(pdfSection)
+        .save()
+        .then(() => {
+          pdfSection.style.display = 'none';
+        })
+        .catch((error) => {
+          alert('PDF generation failed: ' + error);
+          pdfSection.style.display = 'none';
+        });
+    });
+  </script>
+</body>
+</html>
