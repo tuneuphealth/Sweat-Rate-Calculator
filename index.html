@@ -2,313 +2,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sweat Rate Calculator with Graph</title>
-
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    .star {
-      color: red;
-    }
-    .rs-vl {
-      font-weight: bold;
-      color: #3cb14a;
-    }
-    #pdf_section {
-      display: none;
-      background: white;
-      padding: 20px;
-      max-width: 700px;
-      border: 1px solid #ddd;
-      margin-top: 30px;
-    }
-    .pdf_top_title {
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    .left_left_td {
-      font-weight: 600;
-      width: 40%;
-    }
-    .left_right_td {
-      width: 60%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweat Rate Tracker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to ensure font is applied everywhere */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: black; /* Ensure all body text is black */
+        }
+        /* Override default input text color if needed */
+        input {
+            color: black;
+        }
+    </style>
 </head>
-<body>
-  <div class="container my-4">
-    
-    <form id="sweatRateForm" novalidate>
-      <!-- inputs as before -->
-      <div class="form-group row">
-        <label for="in_1" class="col-md-7 col-form-label">Date:</label>
-        <div class="col-md-5">
-          <input type="date" class="form-control" id="in_1" required />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_2" class="col-md-7 col-form-label">Temperature (°C/°F):</label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_2" placeholder="e.g. 22" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_3" class="col-md-7 col-form-label">Humidity (%):</label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_3" placeholder="e.g. 60" />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_4" class="col-md-7 col-form-label">
-          Session Duration (min) <span class="star">*</span>:
-        </label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_4" placeholder="e.g. 60" required />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_5" class="col-md-7 col-form-label">
-          Pre-exercise Weight (kg) <span class="star">*</span>:
-        </label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_5" placeholder="e.g. 70.5" required />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_6" class="col-md-7 col-form-label">
-          Post-exercise Weight (kg) <span class="star">*</span>:
-        </label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_6" placeholder="e.g. 69.8" required />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_7" class="col-md-7 col-form-label">
-          Fluid Intake (ml) <span class="star">*</span>:
-        </label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_7" placeholder="e.g. 750" required />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="in_8" class="col-md-7 col-form-label">Urine Volume (ml):</label>
-        <div class="col-md-5">
-          <input type="number" step="any" class="form-control" id="in_8" placeholder="e.g. 50" />
-        </div>
-      </div>
+<body class="min-h-screen bg-[#8cd895] p-4 font-inter text-black">
+    <div id="root"></div>
 
-      <button type="button" class="btn btn-primary btn-lg btn-block my-3" id="calculator_btn">
-        Calculate Sweat Rate
-      </button>
-    </form>
+    <!-- React and ReactDOM CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX transformation in the browser (for development/single file) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Recharts CDN for charting (kept as it might be used for other chart types in future if desired, but not currently used) -->
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
 
-    <div class="mt-4 p-3 border rounded">
-  <p>
-    Your Sweat Rate was <span class="rs-vl" id="out_4">0.00</span> ml per hour.
-  </p>
-  
-  <!-- Smaller graph below this line -->
-  <div style="width: 300px; margin: 10px 0;">
-    <canvas id="fluidChart" width="300" height="150"></canvas>
-  </div>
-  
-  <p>
-    You managed to replace <span class="rs-vl" id="out_5">0%</span> of your sweat losses during the session.
-  </p>
-  <p>
-    The mismatch between your fluid intake and total fluid losses resulted in a
-    <span class="rs-vl" id="out_6">0%</span> change in body weight.
-  </p>
-  <button class="btn btn-success mt-3" id="btn_download" disabled>Download PDF</button>
-</div>
+    <script type="text/babel">
+        // Access React from the global window object after it is loaded
+        const { useState, useEffect } = React;
+        // Recharts components are no longer needed for this version, but can be easily re-introduced if needed
+        // const { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } = window.Recharts;
 
+        function App() {
+            // State to store all exercise sessions
+            const [sessions, setSessions] = useState([]);
+            // State for form input fields
+            const [formData, setFormData] = useState({
+                date: '',
+                temperature: '',
+                humidity: '',
+                sessionDuration: '',
+                preWeight: '',
+                postWeight: '',
+                fluidIntake: '',
+                urineVolume: '',
+            });
 
-    <!-- Fluid Intake vs Loss Graph -->
-    <div class="mt-4">
-      <canvas id="fluidChart" width="400" height="200"></canvas>
-    </div>
+            // Function to calculate sweat rate
+            const calculateSweatRate = (data) => {
+                const { preWeight, postWeight, fluidIntake, urineVolume, sessionDuration } = data;
 
-    <!-- Hidden PDF section (unchanged) -->
-    <div id="pdf_section">
-      <h3 class="pdf_top_title">Sweat Rate Results</h3>
-      <table class="table table-bordered">
-        <tbody>
-          <tr><td class="left_left_td">Date:</td><td id="in_1_pdf">-</td></tr>
-          <tr><td class="left_left_td">Temperature (°C/°F):</td><td id="in_2_pdf">-</td></tr>
-          <tr><td class="left_left_td">Humidity (%):</td><td id="in_3_pdf">-</td></tr>
-          <tr><td class="left_left_td">Session Duration:</td><td id="in_4_pdf">-</td></tr>
-          <tr><td class="left_left_td">Pre-exercise Weight:</td><td id="in_5_pdf">-</td></tr>
-          <tr><td class="left_left_td">Post-exercise Weight:</td><td id="in_6_pdf">-</td></tr>
-          <tr><td class="left_left_td">Fluid Intake (ml):</td><td id="in_7_pdf">-</td></tr>
-          <tr><td class="left_left_td">Urine Volume (ml):</td><td id="in_8_pdf">-</td></tr>
-        </tbody>
-      </table>
-      <p>Your sweat rate in these conditions was <span id="out_4_pdf">0.00</span> ml per hour.</p>
-      <p>You managed to replace <span id="out_7_pdf">0%</span> of your sweat losses during the session.</p>
-      <p>The mismatch between your fluid intake and total fluid losses resulted in a <span id="out_8_pdf">0%</span> change in body weight.</p>
-    </div>
-  </div>
+                // Convert string inputs to numbers
+                const preW = parseFloat(preWeight);
+                const postW = parseFloat(postWeight);
+                const fluidI = parseFloat(fluidIntake || 0); // Default to 0 if empty
+                const urineV = parseFloat(urineVolume || 0); // Default to 0 if empty
+                const duration = parseFloat(sessionDuration);
 
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+                // Basic validation for essential fields
+                if (isNaN(preW) || isNaN(postW) || isNaN(duration) || duration <= 0) {
+                    console.error("Invalid input for sweat rate calculation.");
+                    return null;
+                }
 
-  <script>
-    let fluidChart;
+                // Sweat Rate formula: (Weight loss in ml + Fluid intake in ml - Urine volume in ml) / Session duration in hours
+                // 1 kg weight loss is approx 1000 ml fluid loss
+                const weightLossMl = (preW - postW) * 1000;
+                const totalFluidLossMl = weightLossMl + fluidI - urineV;
+                const sessionDurationHours = duration / 60;
 
-    const createChart = () => {
-      const ctx = document.getElementById('fluidChart').getContext('2d');
-      fluidChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Fluid Intake (ml)', 'Total Fluid Loss (ml)'],
-          datasets: [{
-            label: 'Volume (ml)',
-            data: [0, 0],
-            backgroundColor: ['#3cb14a', '#dc3545'],
-          }],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            }
-          },
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              enabled: true
-            }
-          }
+                return totalFluidLossMl / sessionDurationHours;
+            };
+
+            // Handle input changes
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: value,
+                }));
+            };
+
+            // Handle form submission
+            const handleSubmit = (e) => {
+                e.preventDefault();
+
+                // Calculate sweat rate before adding to sessions
+                const sweatRate = calculateSweatRate(formData);
+
+                if (sweatRate === null) {
+                    // Display a user-friendly error message instead of console.error
+                    // Using a custom modal message since alert() is disallowed
+                    const messageBox = document.createElement('div');
+                    messageBox.style.cssText = `
+                        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                        background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                        z-index: 1000; text-align: center;
+                    `;
+                    messageBox.innerHTML = `
+                        <p>Please ensure Pre-exercise Weight, Post-exercise Weight, and Session Duration are valid numbers and duration is greater than 0.</p>
+                        <button onclick="this.parentNode.remove()" style="margin-top: 15px; padding: 8px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
+                    `;
+                    document.body.appendChild(messageBox);
+                    return;
+                }
+
+                const newSession = {
+                    id: Date.now(), // Unique ID for key prop in list rendering
+                    date: formData.date,
+                    temperature: parseFloat(formData.temperature),
+                    humidity: parseFloat(formData.humidity),
+                    sessionDuration: parseFloat(formData.sessionDuration),
+                    preWeight: parseFloat(formData.preWeight),
+                    postWeight: parseFloat(formData.postWeight),
+                    fluidIntake: parseFloat(formData.fluidIntake || 0),
+                    urineVolume: parseFloat(formData.urineVolume || 0),
+                    sweatRate: parseFloat(sweatRate.toFixed(2)), // Round to 2 decimal places
+                };
+
+                setSessions(prev => [...prev, newSession]);
+                // Clear form after submission
+                setFormData({
+                    date: '',
+                    temperature: '',
+                    humidity: '',
+                    sessionDuration: '',
+                    preWeight: '',
+                    postWeight: '',
+                    fluidIntake: '',
+                    urineVolume: '',
+                });
+            };
+
+            // Chart data is no longer needed for this version
+            // const chartData = sessions.filter(s =>
+            //     !isNaN(s.temperature) && s.temperature !== null &&
+            //     !isNaN(s.sweatRate) && s.sweatRate !== null
+            // ).map(s => ({
+            //     temperature: s.temperature,
+            //     sweatRate: s.sweatRate,
+            //     date: s.date // Include date for tooltip
+            // }));
+
+            return (
+                <div className="min-h-screen bg-[#8cd895] p-4 font-inter text-black">
+                    <h1 className="text-4xl font-bold text-center text-black mb-8 rounded-lg shadow-md p-4 bg-[#eff8f0] bg-opacity-70">
+                        Sweat Rate Tracker
+                    </h1>
+
+                    {/* Input Form */}
+                    <div className="bg-[#eff8f0] p-6 rounded-xl shadow-lg mb-8 max-w-4xl mx-auto">
+                        <h2 className="text-2xl font-semibold text-black mb-4">Record New Session</h2>
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                                <input
+                                    type="date"
+                                    id="date"
+                                    name="date"
+                                    value={formData.date}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="temperature" className="block text-sm font-medium text-gray-700">Temperature (°C)</label>
+                                <input
+                                    type="number"
+                                    id="temperature"
+                                    name="temperature"
+                                    value={formData.temperature}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    step="0.1"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="humidity" className="block text-sm font-medium text-gray-700">Humidity (%)</label>
+                                <input
+                                    type="number"
+                                    id="humidity"
+                                    name="humidity"
+                                    value={formData.humidity}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    min="0"
+                                    max="100"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="sessionDuration" className="block text-sm font-medium text-gray-700">Session Duration (min)</label>
+                                <input
+                                    type="number"
+                                    id="sessionDuration"
+                                    name="sessionDuration"
+                                    value={formData.sessionDuration}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    min="1"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="preWeight" className="block text-sm font-medium text-gray-700">Pre-exercise Weight (kg)</label>
+                                <input
+                                    type="number"
+                                    id="preWeight"
+                                    name="preWeight"
+                                    value={formData.preWeight}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="postWeight" className="block text-sm font-medium text-gray-700">Post-exercise Weight (kg)</label>
+                                <input
+                                    type="number"
+                                    id="postWeight"
+                                    name="postWeight"
+                                    value={formData.postWeight}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="fluidIntake" className="block text-sm font-medium text-gray-700">Fluid Intake (ml)</label>
+                                <input
+                                    type="number"
+                                    id="fluidIntake"
+                                    name="fluidIntake"
+                                    value={formData.fluidIntake}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    min="0"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="urineVolume" className="block text-sm font-medium text-gray-700">Urine Volume (ml)</label>
+                                <input
+                                    type="number"
+                                    id="urineVolume"
+                                    name="urineVolume"
+                                    value={formData.urineVolume}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    min="0"
+                                />
+                            </div>
+                            <div className="md:col-span-2 flex justify-center">
+                                <button
+                                    type="submit"
+                                    className="mt-4 px-6 py-3 bg-indigo-600 text-white font-bold rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-200 ease-in-out"
+                                >
+                                    Add Session
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {/* Data Table */}
+                    {sessions.length > 0 && (
+                        <div className="bg-[#eff8f0] p-6 rounded-xl shadow-lg mb-8 max-w-full mx-auto overflow-x-auto">
+                            <h2 className="text-2xl font-semibold text-black mb-4">Recorded Sessions</h2>
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-md">Date</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temp (°C)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Humidity (%)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration (min)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pre-Weight (kg)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post-Weight (kg)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fluid Intake (ml)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Urine Volume (ml)</th>
+                                        <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-md">Sweat Rate (ml/hr)</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {sessions.map((session) => (
+                                        <tr key={session.id}>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.date}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.temperature}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.humidity}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.sessionDuration}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.preWeight}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.postWeight}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.fluidIntake}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">{session.urineVolume}</td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">{session.sweatRate}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            );
         }
-      });
-    };
 
-    const calculateSweatRate = () => {
-      try {
-        const date = document.getElementById('in_1').value;
-        const tempRaw = document.getElementById('in_2').value;
-        const humidityRaw = document.getElementById('in_3').value;
-        const durationRaw = document.getElementById('in_4').value;
-        const preWeightRaw = document.getElementById('in_5').value;
-        const postWeightRaw = document.getElementById('in_6').value;
-        const fluidIntakeRaw = document.getElementById('in_7').value;
-        const urineVolRaw = document.getElementById('in_8').value;
-
-        if (!date) {
-          alert('Please select a date.');
-          return false;
-        }
-        const duration = parseFloat(durationRaw);
-        const preWeight = parseFloat(preWeightRaw);
-        const postWeight = parseFloat(postWeightRaw);
-        const fluidIntake = parseFloat(fluidIntakeRaw);
-        const urineVol = urineVolRaw ? parseFloat(urineVolRaw) : 0;
-        const temp = tempRaw ? parseFloat(tempRaw) : '-';
-        const humidity = humidityRaw ? parseFloat(humidityRaw) : '-';
-
-        if (isNaN(duration) || duration <= 0) {
-          alert('Please enter a valid session duration.');
-          return false;
-        }
-        if (isNaN(preWeight) || preWeight <= 0) {
-          alert('Please enter a valid pre-exercise weight.');
-          return false;
-        }
-        if (isNaN(postWeight) || postWeight <= 0) {
-          alert('Please enter a valid post-exercise weight.');
-          return false;
-        }
-        if (isNaN(fluidIntake) || fluidIntake < 0) {
-          alert('Please enter a valid fluid intake.');
-          return false;
-        }
-        if (urineVol < 0) {
-          alert('Please enter a valid urine volume.');
-          return false;
-        }
-
-        // Calculate total fluid loss (ml)
-        const bodyWeightChangeMl = (preWeight - postWeight) * 1000;
-        const totalFluidLoss = bodyWeightChangeMl + fluidIntake - urineVol;
-
-        const sweatRate = (totalFluidLoss / duration) * 60;
-        const fluidReplacementPct = totalFluidLoss > 0 ? (fluidIntake / totalFluidLoss) * 100 : 0;
-        const bodyWeightChangePct = ((postWeight - preWeight) / preWeight) * 100;
-
-        // Update page results
-        document.getElementById('out_4').innerText = sweatRate.toFixed(2);
-        document.getElementById('out_5').innerText = fluidReplacementPct.toFixed(1) + '%';
-        document.getElementById('out_6').innerText = bodyWeightChangePct.toFixed(2) + '%';
-
-        // Update chart data and refresh chart
-        fluidChart.data.datasets[0].data = [fluidIntake, totalFluidLoss];
-        fluidChart.update();
-
-        // Enable PDF button
-        document.getElementById('btn_download').disabled = false;
-
-        // Update PDF content
-        document.getElementById('in_1_pdf').innerText = date;
-        document.getElementById('in_2_pdf').innerText = temp === '-' ? '-' : temp.toFixed(1);
-        document.getElementById('in_3_pdf').innerText = humidity === '-' ? '-' : humidity.toFixed(1);
-        document.getElementById('in_4_pdf').innerText = duration + ' min';
-        document.getElementById('in_5_pdf').innerText = preWeight.toFixed(2) + ' kg';
-        document.getElementById('in_6_pdf').innerText = postWeight.toFixed(2) + ' kg';
-        document.getElementById('in_7_pdf').innerText = fluidIntake.toFixed(0) + ' ml';
-        document.getElementById('in_8_pdf').innerText = urineVol > 0 ? urineVol.toFixed(0) + ' ml' : '-';
-        document.getElementById('out_4_pdf').innerText = sweatRate.toFixed(2) + ' ml per hour';
-        document.getElementById('out_7_pdf').innerText = fluidReplacementPct.toFixed(1) + '%';
-        document.getElementById('out_8_pdf').innerText = bodyWeightChangePct.toFixed(2) + '%';
-
-        return true;
-      } catch (e) {
-        console.error('Calculation error:', e);
-        alert('An error occurred during calculation. Please check your inputs.');
-        return false;
-      }
-    };
-
-    document.getElementById('calculator_btn').addEventListener('click', calculateSweatRate);
-
-    document.getElementById('btn_download').addEventListener('click', () => {
-      const pdfSection = document.getElementById('pdf_section');
-      pdfSection.style.display = 'block';
-
-      const opt = {
-        margin: 0.5,
-        filename: 'Sweat_Rate_Report.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-      };
-
-      html2pdf()
-        .set(opt)
-        .from(pdfSection)
-        .save()
-        .then(() => {
-          pdfSection.style.display = 'none';
-        })
-        .catch((error) => {
-          alert('PDF generation failed: ' + error);
-          pdfSection.style.display = 'none';
-        });
-    });
-
-    // Initialize chart when page loads
-    window.onload = () => {
-      createChart();
-    };
-  </script>
+        // Render the App component into the root div
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
 </body>
 </html>
