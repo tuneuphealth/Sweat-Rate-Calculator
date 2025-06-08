@@ -1,0 +1,928 @@
+  <style>
+    #mx_cl *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+    }
+
+    #mx_cl {
+      line-height: 1.5;
+      font-family: inherit;
+    }
+
+    #mx_cl .container {
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #4a4a4a;
+      text-align: left;
+    }
+
+    #mx_cl label {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    #mx_cl .row {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+
+    #mx_cl .col-md-1,
+    #mx_cl .col-md-10,
+    #mx_cl .col-md-11,
+    #mx_cl .col-md-12,
+    #mx_cl .col-md-2,
+    #mx_cl .col-md-3,
+    #mx_cl .col-md-4,
+    #mx_cl .col-md-5,
+    #mx_cl .col-md-6,
+    #mx_cl .col-md-7,
+    #mx_cl .col-md-8,
+    #mx_cl .col-md-9 {
+      position: relative;
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    #mx_cl .form-group {
+      margin-bottom: 1rem;
+    }
+
+    #mx_cl .form-control {
+      display: block;
+      width: 100%;
+      height: 35px;
+      padding: 0.375rem 0.75rem;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #4a4a4a;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #dddddd;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      border-radius: 5px;
+    }
+
+    #mx_cl .form-control:focus {
+      outline: none;
+    }
+
+    #mx_cl .btn {
+      display: block;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-color: #3cb14a;
+      border: 1px solid transparent;
+      padding: 0.375rem 2.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: 8px;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      width: 100%;
+    }
+
+    #mx_cl .btn-primary {
+      background-color: #ffffff;
+      border-color: #3cb14a;
+      color: #3cb14a;
+    }
+
+    #mx_cl .btn-primary:hover {
+      background-color: #28a745;
+      border-color: #3cb14a;
+      color: #fff;
+    }
+
+    #mx_cl .btn-calculate {
+      color: #fff;
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    #mx_cl .btn-calculate:hover {
+      color: #28a745;
+      background-color: #fff;
+      border-color: #28a745;
+    }
+
+    #mx_cl table {
+      border-collapse: collapse;
+    }
+
+    #mx_cl .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #212529;
+    }
+
+    #mx_cl .table td,
+    #mx_cl .table th {
+      padding: 2px;
+      vertical-align: top;
+      border-bottom: 1px solid #2d983a;
+      padding-left: 0px;
+      padding-top: 5px;
+      font-size: 14px;
+    }
+
+    #mx_cl .table td.t-head {
+      padding: 0.5rem;
+      vertical-align: top;
+      border-top: none;
+      padding-left: 0px;
+    }
+
+    #mx_cl .text-center {
+      text-align: center;
+    }
+
+    @media (min-width: 576px) {
+      #mx_cl .container {
+        max-width: 100%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      #mx_cl .container {
+        max-width: 100%;
+      }
+
+      #mx_cl .col-md-12 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      #mx_cl .col-md-9 {
+        -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+        max-width: 75%;
+      }
+
+      #mx_cl .col-md-8 {
+        -ms-flex: 0 0 66.666667%;
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+      }
+
+      #mx_cl .col-md-7 {
+        -ms-flex: 0 0 58.33333%;
+        flex: 0 0 58.33333%;
+        max-width: 58.33333%;
+      }
+
+      #mx_cl .col-md-6 {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+
+      #mx_cl .col-md-5 {
+        -ms-flex: 0 0 41.666667%;
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+      }
+
+      #mx_cl .col-md-4 {
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+      }
+
+      #mx_cl .col-md-3 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+      }
+    }
+
+    @media (min-width: 992px) {
+      #mx_cl .container {
+        max-width: 900px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      #mx_cl .container {
+        max-width: 900px;
+      }
+    }
+
+    #mx_cl .text-right {
+      text-align: right;
+    }
+
+    #mx_cl .form-group,
+    #mx_cl .input-group {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      #mx_cl .section-row {
+        padding: 20px !important;
+      }
+    }
+
+    #mx_cl .top-title {
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 39px;
+      color: #3cb14a;
+      text-align: center;
+      border-bottom: 1px solid #3cb14a;
+      padding: 4px;
+      margin: 0px;
+    }
+
+    #mx_cl .all-body {
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border-bottom: 1px solid #a8a8a8;
+    }
+
+    #mx_cl .left-sub-heading {
+      font-weight: 600;
+      font-size: 20px;
+      color: #009aa4;
+    }
+
+    #mx_cl .sub-heading-hr {
+      border-bottom: 1px solid #a8a8a8;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    #mx_cl .output {
+      font-weight: 600;
+      font-size: 36px;
+      color: #000000;
+    }
+
+    #mx_cl .right-section-p {
+      color: #000000;
+      margin-top: 0px;
+    }
+
+    #mx_cl .section-row {
+      padding-top: 25px;
+    }
+
+    #mx_cl .common-p {
+      margin-top: 10px;
+    }
+
+    #mx_cl .right-mid {
+      margin-bottom: 15px;
+    }
+
+    #ms-cl .input-group {
+      position: relative;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -ms-flex-align: stretch;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    #mx_cl .input-group-text {
+      margin-bottom: 0;
+      position: absolute;
+      padding-left: 9px;
+      padding-top: 8.3px;
+      font-size: 1rem;
+    }
+
+    #mx_cl .input-group-text-right {
+      margin-bottom: 0;
+      position: absolute;
+      right: 10px;
+      font-size: 1rem;
+    }
+
+    #mx_cl .text-right {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    #mx_cl .common-class {
+      color: #000000;
+    }
+
+    #mx_cl .text-align-right {
+      text-align: right;
+    }
+
+    #mx_cl .star {
+      color: red;
+    }
+
+    #mx_cl .right-mid-out {
+      font-size: 20px;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    #mx_cl .footer-section {
+      color: #000000;
+    }
+
+    #mx_cl .button-section {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    #mx_cl .right-section p {
+      margin: 0;
+      margin-bottom: 5px;
+      color: #000;
+      font-size: 16px;
+      padding-bottom: 5px;
+      letter-spacing: .03em;
+      text-transform: none;
+    }
+
+    #mx_cl .rs-vl {
+      color: #3cb14a;
+      font-weight: 600;
+    }
+
+    #mx_cl .err-input {
+      border-color: red;
+    }
+
+    #pdf_section {
+      display: none;
+    }
+
+    #pdf_data *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+    }
+
+    #pdf_data p {
+      margin: 0;
+      margin-bottom: 0px;
+      color: #000;
+      font-size: 16px;
+      padding-bottom: 0;
+      letter-spacing: .03em;
+      text-transform: none;
+      text-align: left;
+      margin-top: 15px;
+    }
+
+    #pdf_data .table {
+      width: 50%;
+      max-width: 100%;
+      margin-bottom: 0rem;
+      background-color: #fff;
+      border-collapse: collapse;
+    }
+
+    #pdf_data .table td,
+    #pdf_data .table th {
+      padding: 0.3rem;
+      border-bottom: 2px solid #a6a6a6 !important;
+      vertical-align: middle;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: left;
+    }
+
+    #pdf_data .table th {
+      text-align: center;
+    }
+
+    #pdf_data .table th {
+      font-weight: 500;
+    }
+
+    #pdf_data #pdf_graph {
+      height: 400px;
+    }
+
+    #pdf_data .top-row {
+      background: #f6f6f6 !important;
+    }
+
+    #pdf_data .ds-none {
+      display: none !important;
+    }
+
+    #pdf_data .text-right {
+      text-align: right !important;
+    }
+
+    #pdf_data .text-center {
+      text-align: center !important;
+    }
+
+    #pdf_data .text-left {
+      text-align: left !important;
+    }
+
+    #pdf_data .f600 {
+      font-weight: 600 !important;
+    }
+
+    #pdf_data .row {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+
+    #pdf_data .col-md-12,
+    #pdf_data .col-md-6 {
+      position: relative;
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    #pdf_data .col-md-6 {
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    #pdf_data .pdf_top_title {
+      font-size: 32px;
+      margin: 0px 0 18px 0;
+      color: #3cb14a;
+    }
+
+    #pdf_data .left_left_td {
+      text-align: left !important;
+    }
+
+    #pdf_data .left_right_td {
+      text-align: right !important;
+    }
+
+    #pdf_data .right-head-pdf {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: left;
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.9/datepicker.min.css" />
+  <div class="ms-cl" id="mx_cl">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="top-title">Sweat Rate Calculator</h3>
+          <div class="section-row">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-7">
+                    <label for="in_1" class="">Date:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-curr" id="in_1"
+                        autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_2">Temperature (°C/°F):</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input" id="in_2" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_3">Humidity (%):</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-curr" id="in_3" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_4" class="">Session Duration (min) <span class="star">*</span>:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-req form_inid" id="in_4" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_5" class="">Pre-exercise Weight (kg) <span class="star">*</span>:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-req form_inid" id="in_5" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_6" class="">Post-exercise Weight (kg) <span class="star">*</span>:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-req form_inid" id="in_6" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_7" class="">Fluid Intake (ml) <span class="star">*</span>:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-req form_inid" id="in_7" />
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="in_8" class="">Urine Volume (ml):</label>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control text-right cl-input cl-curr form_inid" id="in_8" />
+                    </div>
+                  </div>
+                </div>
+                <div class="left_button_section">
+                  <button type="button" class="btn btn-calculate" id="calculator_btn">Calculate</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="right-section">
+                  <div class="right-mid">
+                    <span class="right-mid-out">Your Sweat Rate was <span class="rs-vl" id="out_4">0.00</span> ml per
+                      hour.</span>
+                  </div>
+                  <div class="graph-section">
+                    <div id="growth_graph"></div>
+                  </div>
+                  <div class="footer-section">
+                    <p>You managed to replace <span class="rs-vl" id="out_5">0%</span> of your sweat losses during the
+                      session.</p>
+                    <p>The mismatch between your fluid intake and total fluid losses resulted in a <span class="rs-vl"
+                        id="out_6">0%</span> change in body weight.</p>
+                  </div>
+                  <div class="button-section">
+                    <button type="button" class="btn btn-primary" id="btn_download">Download PDF</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pdf_section">
+    <div id="pdf_data">
+      <p style="text-align: start;margin: 5px 0px 20px 0;">
+        <img id="com_logo" src="https://i.postimg.cc/3J2xKz0b/tuneup-logo-rgb-1.png" style="width:200px;" alt="">
+      </p>
+      <h3 style="text-align: start;" class="pdf_top_title">Sweat Rate Results</h3>
+      <br />
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table">
+            <tr>
+              <td class="left_left_td" id="in_1_pdf">Date:</td>
+              <td class="left_right_td" id="out_1_pdf">00/00/0000</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Temperature (°C/°F):</td>
+              <td class="left_right_td" id="in_2_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Humidity:</td>
+              <td class="left_right_td" id="in_3_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Session Duration:</td>
+              <td class="left_right_td" id="in_4_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Pre-exercise Weight:</td>
+              <td class="left_right_td" id="in_5_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Post-exercise Weight:</td>
+              <td class="left_right_td" id="in_6_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Fluid Intake:</td>
+              <td class="left_right_td" id="in_7_pdf">-</td>
+            </tr>
+            <tr>
+              <td class="left_left_td">Urine Volume:</td>
+              <td class="left_right_td" id="in_8_pdf">-</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-12">
+          <br>
+          <br>
+          <br>
+          <span class="right-head-pdf">Your sweat rate in these conditions was <span id="out_4_pdf"> 0.00 </span> ml per
+            hour.</span>
+          <p>
+            You managed to replace
+            <span id="out_7_pdf">0</span> of your sweat losses during the session.
+          </p>
+          <p>
+            The mismatch between your fluid intake and total fluid losses resulted in a
+            <span id="out_8_pdf">0</span> change in body weight.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.9/datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script>
+    jQuery(document).ready(function ($) {
+      const numNumberFormate = {
+        digitGroupSeparator: ',',
+        decimalCharacter: '.',
+        decimalCharacterAlternative: '.',
+        currencySymbol: '',
+        currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.prefix,
+        decimalPlaces: 0,
+        minimumValue: 0,
+        maximumValue: 100
+      };
+
+      const numGreaterThan = {
+        digitGroupSeparator: ',',
+        decimalCharacter: '.',
+        decimalCharacterAlternative: '.',
+        currencySymbol: '',
+        currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.suffix,
+        minimumValue: 0,
+        decimalPlaces: 2,
+      };
+
+      const numFluidIntake = {
+        digitGroupSeparator: ',',
+        decimalCharacter: '.',
+        decimalCharacterAlternative: '.',
+        currencySymbol: '',
+        currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.suffix,
+        minimumValue: 0,
+        decimalPlaces: 0
+      };
+
+      const numTemperature = {
+        digitGroupSeparator: ',',
+        decimalCharacter: '.',
+        decimalCharacterAlternative: '.',
+        currencySymbol: '',
+        negativePositiveSignPlacement: "l",
+        currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.prefix,
+        minimumValue: -9999
+      };
+
+      new AutoNumeric("#in_2", numTemperature)
+      new AutoNumeric("#in_3", numNumberFormate)
+      new AutoNumeric("#in_4", numFluidIntake)
+      new AutoNumeric("#in_5", numGreaterThan)
+      new AutoNumeric("#in_6", numGreaterThan)
+      new AutoNumeric("#in_7", numFluidIntake)
+      new AutoNumeric("#in_8", numFluidIntake)
+      
+      const nft = Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+      const nftd = Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+
+      $("#in_1").datepicker({
+        autoClose: true,
+        viewStart: 2,
+        format: "dd/mm/yyyy",
+      });
+
+      $("#in_1").datepicker("setDate", new Date());
+
+      let in_2 = 0,
+        in_3 = 0,
+        in_4 = 0,
+        in_5 = 0,
+        in_6 = 0,
+        in_7 = 0,
+        in_8 = 0;
+      (sweat_loss = 0), (sweat_rate = 0), (weidht_change = 0), (sweat_rep = 0);
+
+      $("#btn_download").on("click", function () {
+        $(this).prop("disabled", true);
+        $("#btn_download").text("Generating PDF....");
+
+        setTimeout(() => {
+          genPDF();
+          $("#btn_download").prop("disabled", false);
+          $("#btn_download").text("Download PDF");
+        }, 500);
+      });
+
+      function genPDF() {
+        var d = new Date();
+        let date_time = d.getMonth() + 1 + "_" + d.getDate() + "_" + d.getFullYear() + "_" + d.getHours() + "_" + d.getMinutes() + "_" + d.getSeconds();
+        var element = document.getElementById("pdf_data");
+        html2pdf(element, {
+          margin: 10,
+          enableLinks: true,
+          filename: "Sweat Rate Results " + date_time + ".pdf",
+          image: { type: "jpeg", quality: 1 },
+          html2canvas: { scale: 4, logging: false },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        });
+      }
+
+      $(".cl-input").on("keyup", function (e) {
+        if(e.which == 13){
+            $("#calculator_btn").click();
+        }
+      });
+
+      $(".cl-req").on("click", function () {
+        $(this).removeClass("err-input");
+      });
+
+      $("#calculator_btn").on("click", function () {
+        calc();
+      });
+
+      function calc() {
+        let t_req = $(".cl-req").length;
+        let x = 0;
+
+        $(".cl-req").each(function (i, elm) {
+          let vl = removeSign($(elm).val());
+          if (vl) {
+            $(elm).removeClass("err-input");
+            x++;
+          } else {
+            $(elm).addClass("err-input");
+          }
+        });
+
+        if (t_req != x) return;
+
+        in_1 = $("#in_1").val();
+        in_2 = removeSign($("#in_2").val());
+        in_3 = removeSign($("#in_3").val());
+        in_4 = removeSign($("#in_4").val());
+        in_5 = removeSign($("#in_5").val());
+        in_6 = removeSign($("#in_6").val());
+        in_7 = removeSign($("#in_7").val());
+        in_8 = removeSign($("#in_8").val());
+
+        $("#out_1_pdf").text(in_1)
+        sweat_loss = (in_5 - in_6) * 1000 + in_7 - in_8;
+        sweat_rate = (sweat_loss / in_4) * 60;
+        sweat_rep = (in_7 / sweat_loss) * 100;
+        weight_change = ((in_5 - in_6) * 100) / in_5;
+
+        $("#out_4").text(nft.format(sweat_rate));
+        $("#out_5").text(nftd.format(sweat_rep) + "%");
+        $("#out_6").text(nftd.format(weight_change) + "%");
+
+        // Pdf section
+        $("#in_2_pdf").text(nftd.format(in_2));
+        $("#in_3_pdf").text(nft.format(in_3) + "%");
+        $("#in_4_pdf").text(nft.format(in_4) + " min");
+        $("#in_5_pdf").text(nftd.format(in_5) + " kg");
+        $("#in_6_pdf").text(nftd.format(in_6) + " kg");
+        $("#in_7_pdf").text(nft.format(in_7) + " ml");
+        $("#in_8_pdf").text(nft.format(in_8) + " ml");
+        $("#out_4_pdf").text(nft.format(sweat_rate));
+        $("#out_7_pdf").text(nftd.format(sweat_rep) + "%");
+        $("#out_8_pdf").text(nftd.format(weight_change) + "%");
+
+        // Graph Section
+        Highcharts.setOptions({
+          lang: {
+            thousandsSep: ",",
+          },
+        });
+
+        Highcharts.chart("growth_graph", {
+          chart: {
+            type: "column",
+            backgroundColor: "transparent",
+            height: 270,
+          },
+          title: {
+            text: "",
+          },
+          subtitle: {
+            text: "",
+          },
+          xAxis: {
+            labels: {
+              enabled: false,
+            },
+            categories: ["Sweat Loss", "Fluid Intake (ml)"],
+            labels: {
+              enabled: false,
+            },
+            crosshair: true,
+          },
+          yAxis: {
+            labels: {
+              enabled: false,
+            },
+            min: 0,
+            title: {
+              text: "",
+            },
+            gridLineColor: "#dddddd",
+            labels: {
+              enabled: false,
+            },
+          },
+          tooltip: {
+            headerFormat: '<table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>{point.y:,.0f}ml</b></td></tr>',
+            footerFormat: "</table>",
+            shared: true,
+            useHTML: true,
+          },
+          credits: {
+            enabled: false,
+          },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0,
+            },
+          },
+          series: [
+            {
+              name: "Sweat Loss",
+              color: "#3cb14a",
+              data: [sweat_loss],
+            },
+            {
+              name: "Fluid Intake",
+              color: "#F79721",
+              data: [in_7],
+            },
+          ],
+        });
+      }
+
+      function removeSign(vl){
+        return Number(vl.replace(/\$|,/g, ''));
+      }
+      let src = $("#com_logo").attr("src");
+
+      toDataUrl(src, function (myBase64) {
+        $("#com_logo").attr("src", myBase64);
+      });
+
+      function toDataUrl(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          var reader = new FileReader();
+          reader.onloadend = function () {
+            callback(reader.result);
+          }
+          reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+      }
+    });
+  </script>
